@@ -37,5 +37,9 @@ class Entry(TemplateView):
             entry = feeditem(key, path)
         else:
             entry = None
+        # We could show a 404 error here, if wanted:
+        # if entry is None:
+        #     from django.http import Http404
+        #     raise Http404
         data['entry'] = entry
         return data
