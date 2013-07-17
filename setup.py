@@ -24,5 +24,6 @@ setup(name='django-external-feed',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'feedparser',
       ],
       )
