@@ -123,6 +123,13 @@ The feed_entry and feed_entry_title tags both require a key and a path::
     {% feed_entry_title "bbc" "uk-england-cumbria-23341015" %}
 
 
+Compatibility
+-------------
+
+Tested with Django 1.4.3.  It is expected to work fine on Django 1.3
+or higher.
+
+
 .. Define links that are used above.
 
 .. _feedparser: https://pypi.python.org/pypi/feedparser/
