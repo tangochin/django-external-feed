@@ -1,14 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}List of external feeds{% endblock %}
+{% load feeder %}
+{% block title %}{% trans "List of external feeds" %}{% endblock %}
 {% block content %}
-   <h2>{% trans "External feeds" %}</h2>
-   {% for feed in feeds.values %}
-     <h3>{{ feed.feed.title }}</h3>
-     <ul>
-     {% for entry in feed.entries %}
-       <li><a href="{{ entry.local_link }}">{{ entry.title }}</a></li>
-     {% endfor %}
-     </ul>
-   {% endfor %}
+    <h2>{% trans "External feeds" %}</h2>
+    {% feeds "list" %}
 {% endblock %}
