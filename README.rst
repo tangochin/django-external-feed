@@ -32,8 +32,7 @@ Quick start
      your website.
 
    - The source is the url to an rss, atom or other syndication feed.
-     We use [feedparser](https://pypi.python.org/pypi/feedparser/) to
-     parse this.
+     We use feedparser_ to parse this.
 
    - The feed will have a url for each item.  The prefix is the part
      that we strip from this url.  The remainder of the url will end
@@ -70,20 +69,20 @@ template::
 
 These template tags are then available:
 
-- single_feed: show single feed
+- ``single_feed``: show single feed
 
-- feeds: show all feeds.  Internally, this iterates over the feeds and
+- ``feeds``: show all feeds.  Internally, this iterates over the feeds and
   uses the single_feed tag for each of them, passing its own arguments
   to that tag.
 
-- feed_entry: show single entry
+- ``feed_entry``: show single entry
 
-- feed_entry_title: show title of single entry
+- ``feed_entry_title``: show title of single entry
 
-feeds and single_feed take these optional arguments: format_string
-(default: empty string, options: full and/or list) and limit (default:
-0, which means no limit).  single_feed requires a key as first
-argument.
+``feeds`` and ``single_feed`` take these optional arguments:
+format_string (default: empty string, options: ``full`` and/or
+``list``) and limit (default: 0, which means no limit).
+``single_feed`` requires a key as first argument.
 
 Show all feeds, with per entry only the title as a header::
 
@@ -97,7 +96,11 @@ Show all feeds, with entries in a simple list per feed::
 
     {% feeds "list" %}
 
-Specifying "full list" is accepted, but the "list" wins then and "full" is ignored.
+Specifying ``full list`` is accepted, but the ``list`` wins then and
+``full`` is ignored.  Note that at the moment the code simply checks
+for the presence of the string ``full`` or ``list`` and not if the
+words are separated by spaces.  A silly string like ``no fullist
+ignored`` will match both ``full`` and ``list`` without complaining.
 
 Show all feeds, with the default formatting, but limit to 2 entries per feed::
 
@@ -115,3 +118,8 @@ The feed_entry and feed_entry_title tags both require a key and a path::
 
     {% feed_entry "bbc" "uk-england-cumbria-23341015" %}
     {% feed_entry_title "bbc" "uk-england-cumbria-23341015" %}
+
+
+.. Define links that are used above.
+
+.. _feedparser: https://pypi.python.org/pypi/feedparser/
