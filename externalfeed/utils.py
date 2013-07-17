@@ -1,5 +1,8 @@
+import urlparse
+
 from django.conf import settings
 from django.core.cache import cache
+from django.core.urlresolvers import reverse
 import feedparser
 
 
@@ -8,7 +11,23 @@ def load_feeds():
     """
     results = {}
     for key, source, prefix in settings.FEED_SOURCES:
-        results[key] = feedparser.parse(source)
+        parsed = feedparser.parse(source)
+        for entry in parsed['entries']:
+            # Determine the path that we would use on our site.
+            link = entry['link']
+            if link.startswith(prefix):
+                # Take the rest of the link as path
+                link = link[len(prefix):]
+            # Get the path without the domain name at the beginning
+            # and without any queries or fragments at the end.  This
+            # also works for a link where we have stripped the prefix
+            # already.
+            path = urlparse.urlparse(link).path
+            path = path.lstrip('/')
+            entry['path'] = path
+            entry['local_link'] = reverse('externalfeed-entry',
+                                          args=['%s/%s' % (key, path)])
+        results[key] = parsed
     return results
 
 
@@ -24,6 +43,17 @@ def feeds():
     timeout = 60*10  # 10 minutes
     result = grab(cache_key, load_feeds, arguments, timeout)
     return result
+
+
+def feeditem(key, path):
+    # Get the key from our feeds and see if an entry can be found with
+    # the given path.
+    feed = feeds().get(key)
+    if feed is None:
+        return
+    for entry in feed.entries:
+        if entry['path'] == path:
+            return entry
 
 
 def grab(key, loader, arguments=None, timeout=None):

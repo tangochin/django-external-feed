@@ -6,7 +6,7 @@
    {% for feed in feeds.values %}
      <h3>{{ feed.feed.title }}</h3>
      {% for entry in feed.entries %}
-       <h4>{{ entry.title }}</h4>
+       <h4><a href="{{ entry.local_link }}">{{ entry.title }}</a></h4>
        <p>{{ entry.summary|safe }}</p>
      {% endfor %}
    {% endfor %}
