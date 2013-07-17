@@ -14,6 +14,14 @@ class Index(TemplateView):
         return data
 
 
+class List(Index):
+    """Simple list of feed items.
+
+    Just an ul/li list.
+    """
+    template_name = 'externalfeed/list.html'
+
+
 class Entry(TemplateView):
     """Display a feed entry.
     """
