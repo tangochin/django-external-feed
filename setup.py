@@ -5,7 +5,7 @@ version = '0.1.dev0'
 setup(name='django-external-feed',
       version=version,
       description="Show content from an XML feed on your own site.",
-      long_description=open('README.md').read(),
+      long_description=open('README.rst').read(),
       # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: Web Environment',
