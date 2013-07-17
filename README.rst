@@ -5,6 +5,8 @@ Show content from an XML feed on your own site. This allows you to use
 a commercial weblog service, yet you can still integrate the news
 articles within your site.
 
+.. contents::
+
 
 Quick start
 -----------
@@ -40,7 +42,8 @@ Quick start
      the url does not match the prefix, we take the part after the
      domain name.
 
-3. Include the externalfeed URLconf in your project urls.py like this::
+3. Include the externalfeed URLconf in your project urls.py like this,
+   or optionally roll your own::
 
       url(r'^externalnews/', include('externalfeed.urls')),
 
