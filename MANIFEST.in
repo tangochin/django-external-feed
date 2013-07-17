@@ -1,0 +1,3 @@
+recursive-include feed *
+include *md *rst LICENSE
+global-exclude *.pyc
