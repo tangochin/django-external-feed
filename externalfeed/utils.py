@@ -5,6 +5,10 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 import feedparser
 
+# Allow embedded content
+# http://www.rumproarious.com/2010/05/07/universal-feed-parser-is-awesome-except-for-embedded-videos/
+feedparser._HTMLSanitizer.acceptable_elements |= set(["object", "embed", "iframe", "script"])
+
 from time import mktime, struct_time
 from datetime import datetime
 
@@ -51,7 +55,7 @@ def feeds():
         return {}
     arguments = None
     cache_key = 'feeds'  # possibly add arguments
-    timeout = 60*10  # 10 minutes
+    timeout = settings.FEED_CACHE_SECONDS or 600  # Default to 10 minutes
     result = grab(cache_key, load_feeds, arguments, timeout)
     return result
 
