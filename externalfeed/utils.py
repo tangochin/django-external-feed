@@ -5,6 +5,15 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 import feedparser
 
+from time import mktime, struct_time
+from datetime import datetime
+
+def _format_entry_dates(entry):
+    """Apply date formatting on parsed date values """
+    for (key, value) in entry.items():
+        if isinstance(value, struct_time):
+            #new_key = key.replace('_parsed', '_datetime')
+            entry[key] = datetime.fromtimestamp(mktime(value))
 
 def load_feeds():
     """Load feeds and entries.
@@ -13,6 +22,8 @@ def load_feeds():
     for key, source, prefix in settings.FEED_SOURCES:
         parsed = feedparser.parse(source)
         for entry in parsed['entries']:
+            # Apply date formatting
+            _format_entry_dates(entry)
             # Determine the path that we would use on our site.
             link = entry['link']
             if link.startswith(prefix):
