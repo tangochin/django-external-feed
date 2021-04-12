@@ -1,23 +1,25 @@
-import urlparse
+from urllib.parse import urlparse
+from time import mktime, struct_time
+from datetime import datetime
 
 from django.conf import settings
 from django.core.cache import cache
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 import feedparser
+from feedparser import sanitizer as feedparser_sanitizer
+
 
 # Allow embedded content
 # http://www.rumproarious.com/2010/05/07/universal-feed-parser-is-awesome-except-for-embedded-videos/
-feedparser._HTMLSanitizer.acceptable_elements |= set(["object", "embed", "iframe", "script"])
+feedparser_sanitizer._HTMLSanitizer.acceptable_elements |= set(["object", "embed", "iframe", "script"])
 
-from time import mktime, struct_time
-from datetime import datetime
 
 def _format_entry_dates(entry):
     """Apply date formatting on parsed date values """
     for (key, value) in entry.items():
         if isinstance(value, struct_time):
-            #new_key = key.replace('_parsed', '_datetime')
             entry[key] = datetime.fromtimestamp(mktime(value))
+
 
 def load_feeds():
     """Load feeds and entries.
@@ -37,7 +39,7 @@ def load_feeds():
             # and without any queries or fragments at the end.  This
             # also works for a link where we have stripped the prefix
             # already.
-            path = urlparse.urlparse(link).path
+            path = urlparse(link).path
             path = path.lstrip('/')
             entry['path'] = path
             entry['local_link'] = reverse('externalfeed-entry',

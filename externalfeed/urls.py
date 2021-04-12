@@ -1,9 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-from externalfeed.views import Index, List, Entry
+from externalfeed import views
 
-urlpatterns = patterns('',
-    url(r'^$', Index.as_view(), name='externalfeed-index'),
-    url(r'^list/$', List.as_view(), name='externalfeed-list'),
-    url(r'^(?P<path>.*)$', Entry.as_view(), name='externalfeed-entry'),
-    )
+
+urlpatterns = [
+    url(r'^$', views.Index.as_view(), name='externalfeed-index'),
+    url(r'^list/$', views.List.as_view(), name='externalfeed-list'),
+    url(r'^(?P<path>.*)$', views.Entry.as_view(), name='externalfeed-entry'),
+]

@@ -2,21 +2,21 @@ from django.views.generic.base import TemplateView
 
 
 class Index(TemplateView):
-    """Index of feed items.
-    """
+    """Index of feed items."""
     template_name = 'externalfeed/index.html'
 
 
 class List(Index):
-    """Simple list of feed items.
-
+    """
+    Simple list of feed items.
     Just an ul/li list.
     """
     template_name = 'externalfeed/list.html'
 
 
 class Entry(TemplateView):
-    """Display a feed entry.
+    """
+    Display a feed entry.
     """
     template_name = 'externalfeed/entry.html'
 
